@@ -41,12 +41,12 @@ export default function Salidas() {
 
 
     useEffect(() => {
-        requestGet('consultarProductosExistencia')
+        requestGet(`verProductosExistencias`)
         .then(data => {
             console.log(JSON.parse(data))
-            setProductos(JSON.parse(data)); 
+            setProductos(JSON.parse(data));
         })
-    }, []) //Nomas llegando hago una consulat de los productos que hay en existencia
+    }, [])
 
     const agregarSalida = (id,pro) => {
         
@@ -196,7 +196,7 @@ export default function Salidas() {
   return (
     <>
     <div class="container">
-    <div class="mx-auto">
+    <div class="col-md-10 offset-md-2">
         <div class="card card-primary justify-content-center">
             <div class="card-header ">
                 <h3 class="card-title">Registro de salida de inventario</h3>
@@ -244,8 +244,8 @@ export default function Salidas() {
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label for="fecha">Contrasena</label>
-                                <input type="password" name='contrasena' onChange={contrasenaChange} id="pass"class="form-control" placeholder="Ingrese su contrasena"/>
+                                <label for="fecha">Contraseña</label>
+                                <input type="password" name='contrasena' onChange={contrasenaChange} id="pass"class="form-control" placeholder="Ingrese su contraseña"/>
                             </div>
                             
                             <div class="col-12">
@@ -264,7 +264,7 @@ export default function Salidas() {
                                         capturar ?
                                         <table>
                                         <thead>
-                                                        <th className='col-2'>Descripcion</th>
+                                                        <th className='col-2'>Descripción</th>
                                                         <th className='col-2'></th>
                                                         <th className='col-2'>Cantidad</th>
                                                         <th className='col-2'>Costo</th>
@@ -276,7 +276,8 @@ export default function Salidas() {
                                                             <input type="hidden" value={idProducto} onChange={handleOnChange}/>
                                                         </td>
                                                         <td>
-                                                            <button type='button' className='' onClick={handleShow}>
+                                                            <button type='button' tyle="width: 100%;"
+                                                                    className="btn btn btn-secondary" onClick={handleShow}>
                                                                 <i class="bi bi-search"></i>
                                                             </button>
                                                         </td>
@@ -288,7 +289,7 @@ export default function Salidas() {
                                                         </td>
                                                         <td>
                                                             <button type='button' className='btn btn-success' onClick={salidaDetalle}>
-                                                                <i class="bi bi-bag-plus-fill"></i>
+                                                                <i className="bi bi-file-plus-fill"></i>
                                                             </button>
                                                         </td>
                                                         {
@@ -306,7 +307,8 @@ export default function Salidas() {
                                                     </tbody>
                                     </table>
                                         :
-                                        <button type="button" onClick={onSubmit} class="btn btn-primary">Registrar</button>
+                                        <button type="button" onClick={onSubmit} class="btn btn-dark">
+                                            <i className="bi bi-database-fill-add"></i> Capturar productos</button>
                                        
                                     }
                                     
@@ -348,33 +350,37 @@ export default function Salidas() {
                         <tbody id="cuerpoTabla">
                                             {
                                                 productos &&
-                                                 productos.map((producto, index) => (
-                                                        <tr key={index}>
-                                                            <td>
-                                                                {producto.nombre}
-                                                            </td>
-                                                            <td>
-                                                                {producto.descripcion}
-                                                            </td>
-                                                            
-                                                            <td>
-                                                                
+                                                 productos.map(({idproducto, nombre, descripcion}, index) => {
+                                                     console.log('este es el map', idproducto, nombre, descripcion)
+
+                                                     return (
+                                                         <tr key={index}>
+                                                             <td>
+                                                                 { nombre }
+                                                             </td>
+                                                             <td>
+                                                                 {descripcion}
+                                                             </td>
+
+                                                             <td>
+
                                                                  <div className="row">
-                                                                    <div className="col-4">
-                                                                       
-                                                                        <button className=' btn btn-primary' onClick={() =>agregarSalida(producto.idproducto, producto.nombre)}>
-                                                                        <i class="bi bi-bookmark-plus"></i>
-                                                                        </button>
-                                                                        
+                                                                     <div className="col-4">
 
-                                                                    </div>
+                                                                         <button className=' btn btn-primary' onClick={() =>agregarSalida(idproducto, nombre)}>
+                                                                             <i class="bi bi-bookmark-plus"></i>
+                                                                         </button>
 
-                                                                </div>
 
-                                                                
-                                                            </td>
-                                                        </tr>
-                                                    )
+                                                                     </div>
+
+                                                                 </div>
+
+
+                                                             </td>
+                                                         </tr>
+                                                     )
+                                                 }
                                                 )
                                             
                                             }

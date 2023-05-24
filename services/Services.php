@@ -51,6 +51,13 @@ switch($servicesName){
             echo 'Error: missing id.';
         }
         break;
+    case 'consultarProductosExistencia':
+        if ( isset($_GET['idProducto'])){
+            echo json_encode($servicios_productos->consultarProductosExistencia($_GET['idProducto']));
+        } else {
+            echo 'Error: missing id.';
+        }
+        break;
     case 'getUser':
         echo json_encode($servicios_usuario->getUser());
         break;
@@ -67,8 +74,8 @@ switch($servicesName){
     case 'consultarProductos':
         echo json_encode($servicios_productos->consultarProductos());
         break;
-    case 'consultarProductosExistencia':
-        echo json_encode($servicios_productos->consultarProductosExistencia());
+    case 'verProductosExistencias':
+        echo json_encode($servicios_productos->verProductosExistencias());
         break;
     case 'verProductos':
         echo json_encode($servicios_productos->verProductos());

@@ -137,7 +137,7 @@ export default function Entradas() {
     return (
         <>
             <div class="container">
-                <div class="mx-auto">
+                <div class="col-md-10 offset-md-2">
                     <div class="card card-primary justify-content-center">
                         <div class="card-header ">
                             <h3 class="card-title">Registro de entrada de inventario</h3>
@@ -188,7 +188,7 @@ export default function Entradas() {
 
                                                 <table>
                                                     <thead>
-                                                        <th className='col-2'>Descripcion</th>
+                                                        <th className='col-2'>Descripción</th>
                                                         <th className='col-2'></th>
                                                         <th className='col-2'>Cantidad</th>
                                                         <th className='col-2'>Costo</th>
@@ -200,7 +200,8 @@ export default function Entradas() {
                                                             <input type="hidden" value={idProducto} onChange={handleOnChange}/>
                                                         </td>
                                                         <td>
-                                                            <button type='button' className='' onClick={handleShow}>
+                                                            <button type='button' tyle="width: 100%;"
+                                                                    className="btn btn btn-secondary" onClick={handleShow}>
                                                                 <i class="bi bi-search"></i>
                                                             </button>
                                                         </td>
@@ -212,7 +213,7 @@ export default function Entradas() {
                                                         </td>
                                                         <td>
                                                             <button type='button' className='btn btn-success' onClick={entradaDetalle}>
-                                                                <i class="bi bi-bag-plus-fill"></i>
+                                                                <i className="bi bi-file-plus-fill"></i>
                                                             </button>
                                                         </td>
                                                         {
@@ -230,7 +231,8 @@ export default function Entradas() {
                                                     </tbody>
                                                 </table>
                                                 :
-                                                <div class="btn btn-primary" onClick={capturarPro}>Capturar productos</div>
+                                                <div class="btn btn-dark" onClick={capturarPro}>
+                                                    <i className="bi bi-database-fill-add"></i> Capturar productos</div>
 
                                         }
                                     </div>
@@ -306,7 +308,7 @@ export default function Entradas() {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Cerrar
                     </Button>
 
                 </Modal.Footer>

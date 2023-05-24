@@ -86,4 +86,45 @@ class MetodosSQL extends ConfigDB{
             return false;
         }
     }
+
+    protected function execute_stored_procedure($procedureName, $params = []) {
+        try {
+            $data = array();
+
+            $query = "CALL " . $procedureName . "(";
+
+            if (!empty($params)) {
+                $placeholders = array();
+                foreach ($params as $param) {
+                    $placeholders[] = '?';
+                }
+                $query .= implode(',', $placeholders);
+            }
+
+            $query .= ")";
+
+            $prepare_statement = $this->Connection()->prepare($query);
+
+            if (!empty($params)) {
+                $prepare_statement->execute($params);
+            } else {
+                $prepare_statement->execute();
+            }
+
+            if ($prepare_statement->rowCount()) {
+                while ($row = $prepare_statement->fetch(PDO::FETCH_ASSOC)) {
+                    $data[] = $row;
+                }
+            }
+
+            $prepare_statement = null;
+            $this->Disconnect();
+
+            return $data;
+        } catch (Error $err) {
+            echo 'Error in the method execute_stored_procedure -> '.$err;
+            return false;
+        }
+    }
+
 }

@@ -19,18 +19,31 @@ class Productos extends MetodosSQL{
     }
 
     public function consultarProductos(){
-        $query = "SELECT * FROM producto;";
+        $query = "SELECT * FROM producto AS p;";
         return $this->select_query($query);
     }
 
-    public function consultarProductosExistencia(){
-        $query = "SELECT * FROM producto p INNER JOIN entradadetalle e ON p.idproducto = e.idproducto AND e.existencia > 0 ;";
-        //$query = "SELECT * FROM producto p INNER JOIN entradadetalle e ON p.idproducto = e.idproducto AND e.existencia > 0 ;";
+    public function consultarProductosExistencia($idproducto){
+        $query = "SELECT * FROM producto p INNER JOIN entradadetalle ep ON p.idproducto = ep.idproducto WHERE ep.existencia > 0 AND ep.iddetalle = (SELECT MAX(iddetalle) FROM entradadetalle WHERE idproducto = $idproducto);";
         return $this->select_query($query);
     }
 
     public function verProductos(){
         $query = "SELECT * FROM producto;";
         return $this->select_query($query);
+    }
+
+    public function verProductosExistencias(){
+        $productos = $this->consultarProductos();
+
+        $arrayP = array();
+
+        foreach ($productos as $row){
+            $productos2 = $this->consultarProductosExistencia($row["idproducto"]);
+            foreach ($productos2 as $row){
+                $arrayP[] = $row;
+            }
+        }
+        return $arrayP;
     }
 }

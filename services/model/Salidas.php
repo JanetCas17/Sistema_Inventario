@@ -18,7 +18,7 @@ class Salidas extends MetodosSQL{
         return $this->insert_query($query, array($data));
     }
     public function insertSalidaDetalle($idSalida, $idProducto, $cantidad){
-       
+
         $query1 = "SELECT AVG(entradadetalle.precio) AS costo FROM entradadetalle WHERE entradadetalle.idproducto = ".$idProducto.";";
         $costo = $this->select_query($query1);
         $costo = $costo[0]['costo'];
@@ -29,51 +29,20 @@ class Salidas extends MetodosSQL{
 
         if((int)$existencia < (int)$cantidad){
             return 'No hay suficiente existencia, existencia actual: '.$existencia;
-        }/*else{
-            $existencia = (int)$existencia - (int)$cantidad;
-            $query3 = "UPDATE entradadetalle SET entradadetalle.existencia = ? WHERE entradadetalle.idproducto = ?;";
-            $params = array($existencia, $idProducto);
-            $this->update_query($query3, array($params));
-
-            $query = " INSERT INTO salidadetalle (idSalida, idProducto, cantidad, precio) 
-            VALUES (?,?,?,?);";
-            $data = array($idSalida, $idProducto, $cantidad, $costo);
-            return $this->insert_query($query, array($data));
-        } */
+        }
 
         $query = " INSERT INTO salidadetalle (idSalida, idProducto, cantidad, precio) 
         VALUES (?,?,?,?);";
         $data = array($idSalida, $idProducto, $cantidad, $costo);
-        return $this->insert_query($query, array($data));
-
-        /* 
-        $query2 = "SELECT entradadetalle.existencia FROM entradadetalle WHERE entradadetalle.idproducto = ?;";
-        $params = ($idProducto);
-        $existencia = json_encode($this->select_query($query2, array($params)));
-        //print('La existencia me consume'.$existencia[0]);
-        if((int)$existencia < (int)$cantidad){
-            return false;
-        }else{
-            $existencia = (int)$existencia - (int)$cantidad;
-            $query3 = "UPDATE entradadetalle SET entradadetalle.existencia = ? WHERE entradadetalle.idproducto = ?;";
-            $params = array($existencia, $idProducto);
-            $this->update_query($query3, array($params));
-
-            $query = " INSERT INTO salidadetalle (idSalida, idProducto, cantidad, precio) 
-            VALUES (?,?,?,?);";
-            $data = array($idSalida, $idProducto, $cantidad, json_encode($costo));
-            return $this->insert_query($query, array($data));
-            
-        } */
-
-       
+        $insercion = $this->insert_query($query, array($data));
+        if($insercion > 0){
+            $this->execute_stored_procedure('sp_actualizar_existencias_entrada', array($insercion ,$idProducto));
+        }
+        return $insercion;
     
     }
 
     public function consultarSalidaDetalle($idSalida){
-        /*  $query = "
-                     SELECT producto.nombre, entradadetalle.cantidad, entradadetalle.precio FROM entradadetalle INNER JOIN producto ON entradadetalle.identrada = ?;";
-  */
          $query = "SELECT producto.nombre, salidadetalle.cantidad, salidadetalle.precio FROM producto INNER JOIN salidadetalle ON producto.idproducto = salidadetalle.idproducto AND salidadetalle.idsalida = ?;";
          $params = array($idSalida);
          return $this->select_query($query, $params);

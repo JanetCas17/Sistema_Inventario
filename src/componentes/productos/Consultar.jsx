@@ -17,27 +17,27 @@ export default function Ingresar(){
 
     return(
         <div class="container">
-                    <div class="mx-auto">
+                    <div class="col-md-12 offset-md-1">
                         <div class="card card-primary justify-content-center">
                             <div class="card-header ">
                                 <h3 class="card-title">Consultar productos</h3>
                             </div>
                                 <div class="card-body">
                                     
-                                    <table class="table">
+                                    <table class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>
                                                     Nombre del producto
                                                 </th>
                                                 <th>
-                                                    Descripcion del producto
+                                                    Descripción del producto
                                                 </th>
                                                 <th>
-                                                    Stock Minimo
+                                                    Stock Mínimo
                                                 </th>
                                                 <th>
-                                                    Stock Maximo
+                                                    Stock Máximo
                                                 </th>
                                                 <th>
                                                     Operaciones
@@ -64,10 +64,10 @@ export default function Ingresar(){
                                                             <td>
                                                                 <div className="row">
                                                                     <div className="col-4">
-                                                                        <div class="btn btn-primary"  >Editar</div>
+                                                                        <div class="btn btn-outline-dark"  >Editar</div>
                                                                     </div>
                                                                     <div className="col-4">
-                                                                        <div class="btn btn-danger"  >Eliminar</div>
+                                                                        <div class="btn btn-dark"  >Eliminar</div>
                                                                     </div>
                                                                 </div>
                                                                 

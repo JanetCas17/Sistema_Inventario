@@ -20,58 +20,13 @@ class Entradas extends MetodosSQL{
     }
 
     public function insertEntradaDetalle($idEntrada, $idProducto, $cantidad, $precio){
-        //Query extra, tratando de meter un trigger sin trigger
-        //$query2 = "SELECT SUM(entradadetalle.cantidad) - SUM(salidadetalle.cantidad) FROM entradadetalle INNER JOIN salidadetalle WHERE entradadetalle.idproducto=?;";
-        /* $query2 = "SELECT 
-        (SELECT SUM(cantidad) FROM entradadetalle WHERE idproducto=?) - (SELECT SUM(cantidad) FROM salidadetalle WHERE idproducto=?) AS resultado;";
-        return $this->select_query2($query2, array($idProducto, $idProducto)); */
-
-            /* $query = "INSERT INTO entradadetalle (idEntrada, idProducto, cantidad, existencia, precio) 
-            VALUES (?,?,?,0,?);";
-            $data = array($idEntrada, $idProducto, $cantidad, $precio);
-            $this->insert_query($query, array($data));
-            return $existencia;
- */
-        $query1 = "SELECT SUM(cantidad) AS existencia FROM entradadetalle WHERE idproducto=?;";
-        $existenciaentrada = $this->select_query($query1, array($idProducto));
-        $existenciaentrada = $existenciaentrada[0]['existencia'];
-
-        $query3 = "SELECT SUM(cantidad) AS existencia FROM salidadetalle WHERE idproducto=?;";
-        $existenciasalida = $this->select_query($query3, array($idProducto));
-        $existenciasalida = $existenciasalida[0]['existencia'];
-
-        if($existenciasalida == null){
-            $existencia = (int)$existenciaentrada;
-        }else{
-            $existencia = (int)$existenciaentrada - (int)$existenciasalida;
-        }
-        
-
-
-        //ESto esta bien lo demas es experimento
         $query = "INSERT INTO entradadetalle (idEntrada, idProducto, cantidad, existencia, precio) 
-        VALUES (?,?,?,".$existencia.",?);";
+        VALUES (?,?,?,0,?);";
         $data = array($idEntrada, $idProducto, $cantidad, $precio);
         $insercion = $this->insert_query($query, array($data));
-
-        $query1 = "SELECT SUM(cantidad) AS existencia FROM entradadetalle WHERE idproducto=?;";
-        $existenciaentrada = $this->select_query($query1, array($idProducto));
-        $existenciaentrada = $existenciaentrada[0]['existencia'];
-
-        $query3 = "SELECT SUM(cantidad) AS existencia FROM salidadetalle WHERE idproducto=?;";
-        $existenciasalida = $this->select_query($query3, array($idProducto));
-        $existenciasalida = $existenciasalida[0]['existencia'];
-
-        if($existenciasalida == null){
-            $existencia = (int)$existenciaentrada;
-        }else{
-            $existencia = (int)$existenciaentrada - (int)$existenciasalida;
+        if($insercion > 0){
+            $this->execute_stored_procedure('sp_actualizar_existencias_entrada', array($insercion ,$idProducto));
         }
-        
-        $query2 = "UPDATE entradadetalle SET existencia = ".$existencia." WHERE identrada = ? AND idproducto = ?;";
-        $data2 = array($idEntrada, $idProducto);
-        $this->insert_query($query2, array($data2));
-        
 
         return $insercion;
     }

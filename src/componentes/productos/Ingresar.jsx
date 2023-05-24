@@ -30,8 +30,8 @@ export default function Ingresar() {
 
   return (
                 <div class="container">
-                    <div class="mx-auto">
-                        <div class="card card-primary justify-content-center">
+                    <div class="col-md-10 offset-md-2">
+                        <div class="card card-primary">
                             <div class="card-header ">
                                 <h3 class="card-title">Datos del producto</h3>
                             </div>
@@ -42,21 +42,22 @@ export default function Ingresar() {
                                         <input type="text"  name="nombre" onChange={(e) => setNombre(e.target.value)} class="form-control" id="pNombre" placeholder="Nombre del producto"/>
                                         </div>
                                     <div class="form-group">
-                                        <label for="pDescripcion">Descripcion del producto</label>
+                                        <label for="pDescripcion">Descripción del producto</label>
                                         <input type="text" name="descripcion" onChange={(e) => setDescripcion(e.target.value)}  class="form-control" id="pDescripcion" placeholder="Descrripcion del producto"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="pMinimo">Stock Minimo</label>
-                                        <input type="text" name="minimo" onChange={(e) => setMinimo(e.target.value)}   class="form-control" id="pMinimo" placeholder="Stock minimo del producto"/>
+                                        <label for="pMinimo">Stock Mínimo</label>
+                                        <input type="text" name="minimo" onChange={(e) => setMinimo(e.target.value)}   class="form-control" id="pMinimo" placeholder="Stock mínimo del producto"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="pMaximo">Stock Maximo</label>
-                                        <input type="text" name="maximo"  onChange={(e) => setMaximo(e.target.value)}  class="form-control" id="pMaximo" placeholder="Stock mXIMO del producto"/>
+                                        <label for="pMaximo">Stock Máximo</label>
+                                        <input type="text" name="maximo"  onChange={(e) => setMaximo(e.target.value)}  class="form-control" id="pMaximo" placeholder="Stock máximo del producto"/>
                                     </div>
                 
                                 </div>
                                 <div class="card-body">
-                                    <div class="btn btn-success"  onClick={onSubmit} >Guardar Producto</div>
+                                    <div class="btn btn-dark"  onClick={onSubmit} >
+                                        <i className="bi bi-database-fill-add"></i> Guardar Producto</div>
                                 </div>
                             </form>
                             </div>

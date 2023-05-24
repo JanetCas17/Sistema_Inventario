@@ -104,7 +104,7 @@ const Table = ({ data }) => {
         <td>{row.usuario}</td>
         <td>
           {
-            <button type='button' className='' onClick={()=>handleShow(row)}>
+            <button type='button' className='btn btn-dark' onClick={()=>handleShow(row)}>
               <i class="bi bi-search"></i>
             </button>
           }
@@ -143,7 +143,7 @@ const Table = ({ data }) => {
   return (
     <>
     <div className='container'>
-      <div className="card">
+      <div className="card col-md-12 offset-md-1">
         <div className="card-header">
           <h3 className=''>
             Entradas
@@ -154,7 +154,7 @@ const Table = ({ data }) => {
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={20}>20</option>
-              </select> productos por pagina
+              </select> productos por página
             </div>
             <div className="col-6">
               <div className='d-flex justify-content-end'>
@@ -167,7 +167,7 @@ const Table = ({ data }) => {
           
           
           
-          <table className='table'>
+          <table className='table table-striped table-bordered'>
             <thead>
               <tr>
                 <th>Fecha</th>
@@ -188,17 +188,15 @@ const Table = ({ data }) => {
                 Mostrando {indexOfFirstRow + 1} - {indexOfLastRow} de {filteredRows.length} productos
               </div>
               <div className="col-2">
-              <div className='d-flex justify-content-center'> Pagina {currentPage} de {pageNumbers.length}</div>
+              <div className='d-flex justify-content-center'> Página {currentPage} de {pageNumbers.length}</div>
               </div>
               <div className="col-5">
                 <p>
                  
                   <div className='d-flex justify-content-end'>
-                  <a className='btn btn-primary'  onClick={(event) => handleChangePage(event, 1)}>Primera</a> 
-                  <button className='btn btn-primary' type='link' onClick={(event) => handleChangePage(event, currentPage - 1)}>Anterior</button> 
-                  <button className='btn btn-secondary'>{currentPage}</button> 
-                  <button className='btn btn-primary' onClick={(event) => handleChangePage(event, currentPage + 1)}>Siguiente</button> 
-                  <button className='btn btn-primary' onClick={(event) => handleChangePage(event, pageNumbers.length)}>Ultima</button>
+                  <button className='btn btn-outline-dark' type='link' onClick={(event) => handleChangePage(event, currentPage - 1)}>Anterior</button>
+                  <button className='btn btn-outline-secondary'>{currentPage}</button>
+                  <button className='btn btn-outline-dark' onClick={(event) => handleChangePage(event, currentPage + 1)}>Siguiente</button>
                 </div>
                 </p>
                 
@@ -224,7 +222,7 @@ const Table = ({ data }) => {
                   <div ref={componentRef} className='container' style={{width: '100%', margin: '2px', position: 'center'}}>
                     <div className="card">
                       <div className="card-header">
-                        <h4>Registro Entrada de Movimiento</h4>
+                        <h4>Consulta de Entrada</h4>
                       </div>
                     </div>
                   
